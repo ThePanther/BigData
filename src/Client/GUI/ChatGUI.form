@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Client.GUI.ChatGUI">
+  <grid id="27dc6" binding="ChatPanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="500" height="181"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="461bd" class="javax.swing.JButton" binding="SubmitButton">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <horizontalAlignment value="4"/>
+          <horizontalTextPosition value="4"/>
+          <label value="Senden"/>
+          <margin top="2" left="14" bottom="2" right="14"/>
+          <text value="Senden"/>
+        </properties>
+      </component>
+      <scrollpane id="a6d8b">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="7941" class="javax.swing.JTextArea" binding="HistoryTextarea">
+            <constraints/>
+            <properties>
+              <minimumSize width="0" height="16"/>
+              <preferredSize width="0" height="120"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <scrollpane id="296e8">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="2b51b" class="javax.swing.JTextArea" binding="MessageTextarea">
+            <constraints/>
+            <properties>
+              <margin top="0" left="0" bottom="0" right="0"/>
+              <minimumSize width="0" height="15"/>
+              <preferredSize width="0" height="10"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+    </children>
+  </grid>
+</form>

@@ -1,10 +1,20 @@
 package Client.GUI;
 
+import javax.swing.*;
+
 /**
-  * User: Hero
- * Date: 28.11.14
- * Time: 19:30
-  */
+ * Created with IntelliJ IDEA.
+ * User: Hero
+ * Date: 08.12.14
+ * Time: 19:31
+ * To change this template use File | Settings | File Templates.
+ */
 public class ClientGUI {
-    //TODO Hier kommt der Quellcode für ClientGUI rein
+    private JPanel ClientPanel;
+    private JTextField textField1;
+    private JLabel UsernameLabel;
+    private JButton SearchButton;
+    private JComboBox ContactComboBox;
+    private JLabel ContactLabel;
+    private JButton ChatButton;
 }
