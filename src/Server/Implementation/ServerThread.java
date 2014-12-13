@@ -63,6 +63,8 @@ public class ServerThread extends Thread{
             handleRegistration(incomingPacket.getRegistration());
         } else if (incomingPacket.getType() == Type.MESSAGE) {
             handleMessage(incomingPacket.getMessage());
+        } else if (incomingPacket.getType() == Type.LOGOUT) {
+            handleLogout(incomingPacket.getLogout());
         } else {
             send(false, "ERROR unknown Packet");
         }
@@ -96,6 +98,19 @@ public class ServerThread extends Thread{
         System.out.println("To: " + message.getToUser());
         System.out.println("Text: " + message.getText());
         send(true, "Message OK");
+    }
+
+    private void handleLogout(Logout logout) {
+        //TODO: handle DB
+        System.out.println("Logout recived: ");
+        System.out.println("Username: " + logout.getUserName());
+        send(true, "Logout OK");
+        try {
+            socket.close();
+            serviceRequested = false;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

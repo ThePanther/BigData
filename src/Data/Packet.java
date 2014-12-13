@@ -7,6 +7,7 @@ public class Packet implements Serializable{
 
     private Type type;
     private Login login = null;
+    private Logout logout = null;
     private Registration registration = null;
     private Message message = null;
     private Response response = null;
@@ -29,6 +30,14 @@ public class Packet implements Serializable{
 
     public void setLogin(Login login) {
         this.login = login;
+    }
+
+    public Logout getLogout() {
+        return logout;
+    }
+
+    public void setLogout(Logout logout) {
+        this.logout = logout;
     }
 
     public Registration getRegistration() {
