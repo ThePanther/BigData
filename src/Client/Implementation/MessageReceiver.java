@@ -1,11 +1,11 @@
-package Server.Implementation;
+package Client.Implementation;
 
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerImpl extends Thread {
+public class MessageReceiver extends Thread {
 
     private int port;
     private int counter = 0;
@@ -13,7 +13,9 @@ public class ServerImpl extends Thread {
     private ServerSocket welcomeSocket;
     private Socket connectionSocket;
 
-    public ServerImpl(int port) {
+    private boolean serviceRequested = true;
+
+    public MessageReceiver(int port) {
         this.port = port;
 
         try {
@@ -27,13 +29,20 @@ public class ServerImpl extends Thread {
     public void run() {
         try {
             while(true) {
-                System.out.println("TCP Server: Waiting for connection - listening on TCP port: " + port);
+                System.out.println("TCP Receiver: Waiting for connection - listening on TCP port: " + port);
                 connectionSocket = welcomeSocket.accept();
-                (new ServerThread(++counter,connectionSocket)).start();
+                (new ReceiverThread(++counter,connectionSocket,this)).start();
             }
         } catch (IOException e) {
             System.err.println(e.toString());
         }
     }
 
+    public boolean getServiceRequested() {
+        return serviceRequested;
+    }
+
+    public void setServiceRequested(boolean serviceRequested) {
+        this.serviceRequested = serviceRequested;
+    }
 }

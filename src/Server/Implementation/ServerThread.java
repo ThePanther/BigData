@@ -12,17 +12,17 @@ public class ServerThread extends Thread{
 
     private int name;
     private Socket socket;
-    private ServerImpl server;
 
     private ObjectInputStream input;
     private ObjectOutputStream output;
 
     private boolean serviceRequested = true;
 
-    public ServerThread(int num, Socket socket, ServerImpl server) {
+    private MessageSender messageSender;
+
+    public ServerThread(int num, Socket socket) {
         this.name = num;
         this.socket = socket;
-        this.server = server;
     }
 
     @Override
@@ -72,7 +72,10 @@ public class ServerThread extends Thread{
 
     private void handleLogin(Login login) {
         //TODO: handle DB
-        System.out.println("Login recived: ");
+
+        messageSender = new MessageSender(login.getUserName());
+
+        System.out.println("Login received: ");
         System.out.println("Username: " + login.getUserName());
         System.out.println("Password: " + login.getPassword());
         send(true, "Login OK");
@@ -80,12 +83,12 @@ public class ServerThread extends Thread{
 
     private void handleRegistration(Registration registration) {
         //TODO: handle DB
-        System.out.println("Registration recived: ");
+        System.out.println("Registration received: ");
         System.out.println("Username: " + registration.getUserName());
         System.out.println("Password: " + registration.getPassword());
         System.out.println("Email: " + registration.geteMail());
-        System.out.println("Addres: " + registration.getAddress());
-        System.out.println("Birthdate: " + registration.getBirthDate());
+        System.out.println("Address: " + registration.getAddress());
+        System.out.println("Birthday: " + registration.getBirthDate());
         System.out.println("Job: " + registration.getJob());
         System.out.println("Sex: " + registration.getSex());
         send(true, "Registration OK");
@@ -93,7 +96,18 @@ public class ServerThread extends Thread{
 
     private void handleMessage(Message message) {
         //TODO: handle DB
-        System.out.println("Message recived: ");
+        try {
+            //TODO CLIENT IP form DB
+            messageSender.connectToClient("clientIP",0);
+            messageSender.sendMessage(message.getToUser(),message.getText());
+            messageSender.disconnectFromClient();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Message received: ");
         System.out.println("From: " + message.getFromUser());
         System.out.println("To: " + message.getToUser());
         System.out.println("Text: " + message.getText());
@@ -102,7 +116,7 @@ public class ServerThread extends Thread{
 
     private void handleLogout(Logout logout) {
         //TODO: handle DB
-        System.out.println("Logout recived: ");
+        System.out.println("Logout received: ");
         System.out.println("Username: " + logout.getUserName());
         send(true, "Logout OK");
         try {
