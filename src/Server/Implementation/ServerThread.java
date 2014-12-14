@@ -29,8 +29,10 @@ public class ServerThread extends Thread{
     public void run() {
         while (serviceRequested) {
             try {
-                input = new ObjectInputStream(socket.getInputStream());
                 output = new ObjectOutputStream(socket.getOutputStream());
+                output.flush();
+                input = new ObjectInputStream(socket.getInputStream());
+
                 while (!socket.isClosed()) {
                     doTransaction();
                 }
@@ -96,9 +98,15 @@ public class ServerThread extends Thread{
 
     private void handleMessage(Message message) {
         //TODO: handle DB
+        System.out.println("Message received: ");
+        System.out.println("From: " + message.getFromUser());
+        System.out.println("To: " + message.getToUser());
+        System.out.println("Text: " + message.getText());
+        send(true, "Message OK");
+
         try {
             //TODO CLIENT IP form DB
-            messageSender.connectToClient("clientIP",0);
+            messageSender.connectToClient("localhost",50002);
             messageSender.sendMessage(message.getToUser(),message.getText());
             messageSender.disconnectFromClient();
         } catch (IOException e) {
@@ -106,12 +114,6 @@ public class ServerThread extends Thread{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-        System.out.println("Message received: ");
-        System.out.println("From: " + message.getFromUser());
-        System.out.println("To: " + message.getToUser());
-        System.out.println("Text: " + message.getText());
-        send(true, "Message OK");
     }
 
     private void handleLogout(Logout logout) {

@@ -28,14 +28,18 @@ public class ClientImpl {
     }
 
     public void connectToServer() throws IOException {
+
+        System.out.println("1");
         socket = new Socket();
         socket.connect(new InetSocketAddress(serverIP,serverPort));
-
-        input = new ObjectInputStream(socket.getInputStream());
+        System.out.println("2");
         output = new ObjectOutputStream(socket.getOutputStream());
-
+        output.flush();
+        input = new ObjectInputStream(socket.getInputStream());
+        System.out.println("3");
         messageReceiver = new MessageReceiver(clientPort);
         messageReceiver.start();
+        System.out.println("4");
     }
 
     private void send(Packet packet) throws IOException {

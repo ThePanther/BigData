@@ -1,9 +1,9 @@
 package Data;
 
-/**
- * Created by Benjamin on 13.12.2014.
- */
-public class Logout {
+import java.io.Serializable;
+
+
+public class Logout implements Serializable {
 
     private String userName;
 

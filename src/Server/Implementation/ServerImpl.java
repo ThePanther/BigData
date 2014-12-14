@@ -12,6 +12,7 @@ public class ServerImpl extends Thread {
 
     private ServerSocket welcomeSocket;
     private Socket connectionSocket;
+    private boolean serviceRequested = true;
 
     public ServerImpl(int port) {
         this.port = port;
@@ -26,7 +27,7 @@ public class ServerImpl extends Thread {
     @Override
     public void run() {
         try {
-            while(true) {
+            while(serviceRequested) {
                 System.out.println("TCP Server: Waiting for connection - listening on TCP port: " + port);
                 connectionSocket = welcomeSocket.accept();
                 (new ServerThread(++counter,connectionSocket)).start();
@@ -34,6 +35,13 @@ public class ServerImpl extends Thread {
         } catch (IOException e) {
             System.err.println(e.toString());
         }
+
+        System.out.println("Server: Bye Bye.");
+
+    }
+
+    public void setServiceRequested(boolean serviceRequested) {
+        this.serviceRequested = serviceRequested;
     }
 
 }

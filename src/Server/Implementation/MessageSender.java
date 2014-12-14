@@ -3,23 +3,18 @@ package Server.Implementation;
 
 import Data.Message;
 import Data.Packet;
-import Data.Response;
 import Data.Type;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class MessageSender {
 
-    private String clientIP;
-    private int clientPort;
     private String userName;
     private Socket socket;
 
-    private ObjectInputStream input;
     private ObjectOutputStream output;
 
     public MessageSender(String userName) {
@@ -30,7 +25,6 @@ public class MessageSender {
         socket = new Socket();
         socket.connect(new InetSocketAddress(clientIP,clientPort));
 
-        input = new ObjectInputStream(socket.getInputStream());
         output = new ObjectOutputStream(socket.getOutputStream());
     }
 

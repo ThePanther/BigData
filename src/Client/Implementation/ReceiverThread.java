@@ -31,8 +31,10 @@ public class ReceiverThread  extends Thread {
     public void run() {
         while (messageReceiver.getServiceRequested()) {
             try {
-                input = new ObjectInputStream(socket.getInputStream());
                 output = new ObjectOutputStream(socket.getOutputStream());
+                output.flush();
+                input = new ObjectInputStream(socket.getInputStream());
+
                 while (!socket.isClosed()) {
                     doTransaction();
                 }

@@ -1,7 +1,9 @@
 package Data;
 
 
-public class Response {
+import java.io.Serializable;
+
+public class Response implements Serializable {
 
     private boolean state;
     private String reason;
