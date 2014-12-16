@@ -77,6 +77,9 @@ public class ServerThread extends Thread{
 
         messageSender = new MessageSender(login.getUserName());
 
+        System.out.println("Server IPAdresse: "+ socket.getInetAddress().getHostAddress());
+        System.out.println("Server IPAdresse.toString: "+ socket.getInetAddress().toString());
+
         System.out.println("Login received: ");
         System.out.println("Username: " + login.getUserName());
         System.out.println("Password: " + login.getPassword());

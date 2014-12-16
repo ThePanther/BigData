@@ -17,6 +17,14 @@ public class LoginGUI {
     private JLabel PasswordLabel;
     private JTextField PasswortTextfield;
     private JButton LoginButton;
+    private JTextField ServerIPTextField;
+    private JTextField ClientIPTextField;
+    private JTextField ServerportTextField;
+    private JTextField ClientportTextField;
+    private JLabel ServerIPLabel;
+    private JLabel ClientIPLabel;
+    private JLabel ServerportLabel;
+    private JLabel ClientportLabel;
 
     public LoginGUI() {
         LoginButton.addActionListener(new ActionListener() {

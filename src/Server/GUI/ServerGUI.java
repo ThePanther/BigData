@@ -13,6 +13,8 @@ public class ServerGUI {
     private JButton StopButton;
     private JTextArea ConsoleTextArea;
     private JSeparator ServerSeperator;
+    private JTextField ServerPortTextField;
+    private JLabel ServerPortLabel;
 
     private ServerImpl server = new ServerImpl(50000);
 

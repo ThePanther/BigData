@@ -11,10 +11,11 @@ import javax.swing.*;
  */
 public class ClientGUI {
     private JPanel ClientPanel;
-    private JTextField textField1;
+    private JTextField UsernameTextField;
     private JLabel UsernameLabel;
     private JButton SearchButton;
     private JComboBox ContactComboBox;
     private JLabel ContactLabel;
     private JButton ChatButton;
+    private JButton DisconnectButton;
 }
