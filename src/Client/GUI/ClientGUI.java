@@ -1,6 +1,10 @@
 package Client.GUI;
 
+import Client.Implementation.ClientImpl;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,4 +22,45 @@ public class ClientGUI {
     private JLabel ContactLabel;
     private JButton ChatButton;
     private JButton DisconnectButton;
+    private ClientImpl client;
+
+    public ClientGUI() {
+        SearchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        ChatButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ChatGUI chatGUI = new ChatGUI();
+                chatGUI.setClient(client);
+                String[] args = new String[0];
+                chatGUI.main(args);
+            }
+        });
+
+        DisconnectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+    }
+
+
+
+    public void setClient(ClientImpl client) {
+        this.client = client;
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("ClientGUI");
+        frame.setContentPane(new ClientGUI().ClientPanel);
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
 }
