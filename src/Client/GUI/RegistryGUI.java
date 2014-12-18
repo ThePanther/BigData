@@ -1,5 +1,7 @@
 package Client.GUI;
 
+import Client.Implementation.ClientImpl;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +31,7 @@ public class RegistryGUI {
     private JTextField GenderTextField;
     private JTextField BirthdayTextField;
     private JTextField JobTextField;
+    private ClientImpl client;
 
     public RegistryGUI() {
         RegistryButton.addActionListener(new ActionListener() {
@@ -48,9 +51,24 @@ public class RegistryGUI {
                 }
                 else
                 {
-                    //Todo: ClientGUI starten
+                    ClientGUI clientGUI = new ClientGUI();
+                    clientGUI.setClient(client);
+                    String[] args = new String[0];
+                    clientGUI.main(args);
                 }
             }
         });
+    }
+
+    public void setClient(ClientImpl client) {
+        this.client = client;
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("RegistryGUI");
+        frame.setContentPane(new RegistryGUI().RegistryPanel);
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
     }
 }

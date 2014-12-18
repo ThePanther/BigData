@@ -1,5 +1,7 @@
 package Client.GUI;
 
+import Client.Implementation.ClientImpl;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,8 +27,10 @@ public class LoginGUI {
     private JLabel ClientIPLabel;
     private JLabel ServerportLabel;
     private JLabel ClientportLabel;
+    private ClientImpl client;
 
     public LoginGUI() {
+
         LoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -38,10 +42,25 @@ public class LoginGUI {
                     JOptionPane.showMessageDialog(null,"Bitte Passwort angeben!");
                 }
                 else{
-                    //TODO: ClientGUI starten
+                    ClientGUI clientGUI = new ClientGUI();
+                    clientGUI.setClient(client);
+                    String[] args = new String[0];
+                    clientGUI.main(args);
                 }
 
             }
         });
+    }
+
+    public void setClient(ClientImpl client) {
+        this.client = client;
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("LoginGUI");
+        frame.setContentPane(new LoginGUI().LoginPanel);
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
     }
 }

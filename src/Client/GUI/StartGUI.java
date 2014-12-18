@@ -19,32 +19,19 @@ public class StartGUI {
         LoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    System.out.println("trying to connect....");
-                    client.connectToServer();
-                    System.out.println("connected :)");
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-
-                try {
-                    System.out.println("trying to login");
-                    Response response = client.login("benni", "abc");
-                    System.out.println(response.getReason());
-                    System.out.println("Done :)");
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (ClassNotFoundException e1) {
-                    e1.printStackTrace();
-                }
-
-                //TODO: Startet die LoginGUI
+                LoginGUI loginGUI = new LoginGUI();
+                loginGUI.setClient(client);
+                String[] args = new String[0];
+                loginGUI.main(args);
             }
         });
         RegistryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: Startet die RegistryGUI
+                RegistryGUI registryGUI = new RegistryGUI();
+                registryGUI.setClient(client);
+                String[] args = new String[0];
+                registryGUI.main(args);
             }
         });
     }
