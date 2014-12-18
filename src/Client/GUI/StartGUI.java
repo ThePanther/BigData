@@ -1,7 +1,6 @@
 package Client.GUI;
 
 import Client.Implementation.ClientImpl;
-import Data.Response;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,10 +11,22 @@ public class StartGUI {
     private JPanel StartPanel;
     private JButton LoginButton;
     private JButton RegistryButton;
-
-    ClientImpl client = new ClientImpl("localhost",50000,50001);
+    private JTextField serverIPTextField;
+    private JTextField clientIPTextField;
+    private JTextField serverportTextField;
+    private JTextField clientportTextField;
+    private ClientImpl client;
 
     public StartGUI() {
+
+        this.client = new ClientImpl(serverIPTextField.getText(),Integer.parseInt(serverportTextField.getText()),clientIPTextField.getText(),Integer.parseInt(clientportTextField.getText()));
+
+        try {
+            client.connectToServer();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
         LoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

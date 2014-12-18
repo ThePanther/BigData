@@ -10,6 +10,7 @@ public class Packet implements Serializable{
     private Logout logout = null;
     private Registration registration = null;
     private Message message = null;
+    private Usersearch usersearch = null;
     private Response response = null;
 
     public Packet(Type type) {
@@ -54,6 +55,14 @@ public class Packet implements Serializable{
 
     public void setMessage(Message message) {
         this.message = message;
+    }
+
+    public Usersearch getUsersearch() {
+        return usersearch;
+    }
+
+    public void setUsersearch(Usersearch usersearch) {
+        this.usersearch = usersearch;
     }
 
     public Response getResponse() {

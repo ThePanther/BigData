@@ -2,6 +2,7 @@ package Server.Implementation;
 
 
 import Data.*;
+import Server.DB.MongoDB;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,9 +21,13 @@ public class ServerThread extends Thread{
 
     private MessageSender messageSender;
 
+    private MongoDB mongoDB;
+
     public ServerThread(int num, Socket socket) {
         this.name = num;
         this.socket = socket;
+        this.mongoDB = new MongoDB();
+        mongoDB.init();
     }
 
     @Override
@@ -67,40 +72,59 @@ public class ServerThread extends Thread{
             handleMessage(incomingPacket.getMessage());
         } else if (incomingPacket.getType() == Type.LOGOUT) {
             handleLogout(incomingPacket.getLogout());
+        } else if (incomingPacket.getType() == Type.USERSEARCH){
+            handleUsersearch(incomingPacket.getUsersearch());
         } else {
             send(false, "ERROR unknown Packet");
         }
     }
 
     private void handleLogin(Login login) {
-        //TODO: handle DB
-
-        messageSender = new MessageSender(login.getUserName());
-
-        System.out.println("Server IPAdresse: "+ socket.getInetAddress().getHostAddress());
-        System.out.println("Server IPAdresse.toString: "+ socket.getInetAddress().toString());
-
-        System.out.println("Login received: ");
-        System.out.println("Username: " + login.getUserName());
-        System.out.println("Password: " + login.getPassword());
-        send(true, "Login OK");
+        boolean res = mongoDB.login(login);
+        if (res) {
+            messageSender = new MessageSender(login.getUserName());
+            System.out.println("Login received: ");
+            System.out.println("Username: " + login.getUserName());
+            System.out.println("Password: " + login.getPassword());
+            send(true, "Login OK");
+        } else {
+            System.out.println("Login received: ");
+            System.out.println("Username: " + login.getUserName());
+            System.out.println("Password: " + login.getPassword());
+            send(false, "Login NOT OK");
+        }
     }
 
     private void handleRegistration(Registration registration) {
-        //TODO: handle DB
-        System.out.println("Registration received: ");
-        System.out.println("Username: " + registration.getUserName());
-        System.out.println("Password: " + registration.getPassword());
-        System.out.println("Email: " + registration.geteMail());
-        System.out.println("Address: " + registration.getAddress());
-        System.out.println("Birthday: " + registration.getBirthDate());
-        System.out.println("Job: " + registration.getJob());
-        System.out.println("Sex: " + registration.getSex());
-        send(true, "Registration OK");
+        boolean res = mongoDB.register(registration);
+        if (res) {
+            messageSender = new MessageSender(registration.getUserName());
+            System.out.println("Registration received: ");
+            System.out.println("Username: " + registration.getUserName());
+            System.out.println("Password: " + registration.getPassword());
+            System.out.println("Email: " + registration.geteMail());
+            System.out.println("Address: " + registration.getAddress());
+            System.out.println("Birthday: " + registration.getBirthDate());
+            System.out.println("Job: " + registration.getJob());
+            System.out.println("Sex: " + registration.getSex());
+            send(true, "Registration OK");
+        } else {
+            System.out.println("Registration received: ");
+            System.out.println("Username: " + registration.getUserName());
+            System.out.println("Password: " + registration.getPassword());
+            System.out.println("Email: " + registration.geteMail());
+            System.out.println("Address: " + registration.getAddress());
+            System.out.println("Birthday: " + registration.getBirthDate());
+            System.out.println("Job: " + registration.getJob());
+            System.out.println("Sex: " + registration.getSex());
+            send(false, "Registration NOT OK");
+        }
+
     }
 
     private void handleMessage(Message message) {
-        //TODO: handle DB
+        //TODO: handle Neo4j
+        mongoDB.saveMessage(message);
         System.out.println("Message received: ");
         System.out.println("From: " + message.getFromUser());
         System.out.println("To: " + message.getToUser());
@@ -108,7 +132,7 @@ public class ServerThread extends Thread{
         send(true, "Message OK");
 
         try {
-            //TODO CLIENT IP form DB
+            //TODO CLIENT IP  and port form Neo4J
             messageSender.connectToClient("localhost",50002);
             messageSender.sendMessage(message.getToUser(),message.getText());
             messageSender.disconnectFromClient();
@@ -120,7 +144,7 @@ public class ServerThread extends Thread{
     }
 
     private void handleLogout(Logout logout) {
-        //TODO: handle DB
+        //TODO: handle Neo4J
         System.out.println("Logout received: ");
         System.out.println("Username: " + logout.getUserName());
         send(true, "Logout OK");
@@ -129,6 +153,19 @@ public class ServerThread extends Thread{
             serviceRequested = false;
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void handleUsersearch(Usersearch usersearch) {
+        boolean res = mongoDB.searchUser(usersearch);
+        if (res) {
+            System.out.println("Usersearch received: ");
+            System.out.println("Username: " + usersearch.getUser());
+            send(true, "User found");
+        } else {
+            System.out.println("Usersearch received: ");
+            System.out.println("Username: " + usersearch.getUser());
+            send(false, "User NOT found");
         }
     }
 

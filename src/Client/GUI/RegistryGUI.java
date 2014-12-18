@@ -1,10 +1,12 @@
 package Client.GUI;
 
 import Client.Implementation.ClientImpl;
+import Data.Response;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -51,10 +53,22 @@ public class RegistryGUI {
                 }
                 else
                 {
-                    ClientGUI clientGUI = new ClientGUI();
-                    clientGUI.setClient(client);
-                    String[] args = new String[0];
-                    clientGUI.main(args);
+                    try {
+                        Response response = client.register(EmailTextField.getText(), UsernameTextField.getText(), PasswordTextField1.getText(), BirthdayTextField.getText(), GenderTextField.getText(), AddresTextArea.getText(), JobTextField.getText());
+                        System.out.println(response.getReason());
+                        if (response.getState()) {
+                            ClientGUI clientGUI = new ClientGUI();
+                            clientGUI.setClient(client);
+                            String[] args = new String[0];
+                            clientGUI.main(args);
+                        } else {
+                            //TODO: user already in DB
+                        }
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    } catch (ClassNotFoundException e1) {
+                        e1.printStackTrace();
+                    }
                 }
             }
         });

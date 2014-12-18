@@ -1,10 +1,12 @@
 package Client.GUI;
 
 import Client.Implementation.ClientImpl;
+import Data.Response;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,14 +21,6 @@ public class LoginGUI {
     private JLabel PasswordLabel;
     private JTextField PasswortTextfield;
     private JButton LoginButton;
-    private JTextField ServerIPTextField;
-    private JTextField ClientIPTextField;
-    private JTextField ServerportTextField;
-    private JTextField ClientportTextField;
-    private JLabel ServerIPLabel;
-    private JLabel ClientIPLabel;
-    private JLabel ServerportLabel;
-    private JLabel ClientportLabel;
     private ClientImpl client;
 
     public LoginGUI() {
@@ -42,10 +36,22 @@ public class LoginGUI {
                     JOptionPane.showMessageDialog(null,"Bitte Passwort angeben!");
                 }
                 else{
-                    ClientGUI clientGUI = new ClientGUI();
-                    clientGUI.setClient(client);
-                    String[] args = new String[0];
-                    clientGUI.main(args);
+                    try {
+                        Response response = client.login(UserTextfield.getText(),PasswortTextfield.getText());
+                        System.out.println(response.getReason());
+                        if (response.getState()) {
+                            ClientGUI clientGUI = new ClientGUI();
+                            clientGUI.setClient(client);
+                            String[] args = new String[0];
+                            clientGUI.main(args);
+                        } else {
+                            //TODO: wrong password
+                        }
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    } catch (ClassNotFoundException e1) {
+                        e1.printStackTrace();
+                    }
                 }
 
             }

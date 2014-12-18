@@ -1,5 +1,6 @@
 package Client.Implementation;
 
+import Client.GUI.ChatGUI;
 import Data.Message;
 import Data.Packet;
 import Data.Response;
@@ -15,16 +16,18 @@ public class ReceiverThread  extends Thread {
 
     private int name;
     private Socket socket;
+    private ChatGUI chatGUI;
 
     private ObjectInputStream input;
     private ObjectOutputStream output;
 
     private MessageReceiver messageReceiver;
 
-    public ReceiverThread(int num, Socket socket, MessageReceiver messageReceiver) {
+    public ReceiverThread(int num, Socket socket, ChatGUI chatGUI, MessageReceiver messageReceiver) {
         this.name = num;
         this.socket = socket;
         this.messageReceiver = messageReceiver;
+        this.chatGUI = chatGUI;
     }
 
     @Override
@@ -56,7 +59,10 @@ public class ReceiverThread  extends Thread {
     }
 
     private void handleMessage(Message message) {
-        //TODO
+        chatGUI.addText(message.getFromUser(),message.getText());
+        if (!chatGUI.getContacts().contains(message.getFromUser())) {
+            chatGUI.addUser(message.getFromUser());
+        }
         System.out.println("Message received: ");
         System.out.println("From: " + message.getFromUser());
         System.out.println("To: " + message.getToUser());

@@ -13,33 +13,27 @@ public class ClientImpl {
 
     private Socket socket;
     private String serverIP;
+    private String clientIP;
     private int serverPort;
     private int clientPort;
     private String userName;
-    private MessageReceiver messageReceiver;
 
     private ObjectInputStream input;
     private ObjectOutputStream output;
 
-    public ClientImpl(String serverIP, int serverPort, int clientPort) {
+    public ClientImpl(String serverIP, int serverPort, String clientIP, int clientPort) {
         this.serverIP = serverIP;
         this.serverPort = serverPort;
+        this.clientIP = clientIP;
         this.clientPort = clientPort;
     }
 
     public void connectToServer() throws IOException {
-
-        System.out.println("1");
         socket = new Socket();
         socket.connect(new InetSocketAddress(serverIP,serverPort));
-        System.out.println("2");
         output = new ObjectOutputStream(socket.getOutputStream());
         output.flush();
         input = new ObjectInputStream(socket.getInputStream());
-        System.out.println("3");
-        messageReceiver = new MessageReceiver(clientPort);
-        messageReceiver.start();
-        System.out.println("4");
     }
 
     private void send(Packet packet) throws IOException {
@@ -94,13 +88,48 @@ public class ClientImpl {
         return read();
     }
 
-    public void disconnectFromServer() throws IOException {
-        socket.close();
-        endReceiver();
+    public Response searchUser(String user) throws IOException, ClassNotFoundException {
+        Packet packet = new Packet(Type.USERSEARCH);
+        Usersearch usersearch = new Usersearch(user);
+        packet.setUsersearch(usersearch);
+        send(packet);
+        return read();
     }
 
-    private void endReceiver() {
-        messageReceiver.setServiceRequested(false);
+    public void disconnectFromServer() throws IOException {
+        socket.close();
+    }
+
+    public String getServerIP() {
+        return serverIP;
+    }
+
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
+    }
+
+    public int getServerPort() {
+        return serverPort;
+    }
+
+    public void setServerPort(int serverPort) {
+        this.serverPort = serverPort;
+    }
+
+    public int getClientPort() {
+        return clientPort;
+    }
+
+    public void setClientPort(int clientPort) {
+        this.clientPort = clientPort;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
 }
