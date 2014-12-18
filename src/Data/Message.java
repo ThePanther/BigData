@@ -9,6 +9,8 @@ public class Message implements Serializable {
     private String toUser;
     private String text;
 
+    //Performance-Aspekt: Mehr entlastung für DB und somit Server,
+    //wenn Timestamp vom Client mitgesendet wird anstatt ihn getrennt zu erstellen
     public Message(String fromUser, String toUser, String text) {
         this.fromUser = fromUser;
         this.toUser = toUser;
