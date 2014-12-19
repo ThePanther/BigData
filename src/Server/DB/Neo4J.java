@@ -94,15 +94,13 @@ public class Neo4J {
             Node userNode = graphDB.getNodeById(id);
             if ((boolean) userNode.getProperty("online")) {
                 map.put("ip",(String) userNode.getProperty("ip"));
-                map.put("port",(String) userNode.getProperty("port"));
+                map.put("port",(""+(int)userNode.getProperty("port")));
             }
         }
         return map;
     }
 
-    private static enum RelTypes implements RelationshipType {
-        KNOWS,SEND
-    }
+
 
 }
 

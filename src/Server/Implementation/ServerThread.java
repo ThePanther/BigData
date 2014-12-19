@@ -96,7 +96,7 @@ public class ServerThread extends Thread{
     }
 
     private void handleRegistration(Registration registration) {
-        boolean res = mongoDB.register(registration);
+        boolean res = true;//TODO:mongoDB.register(registration);
         if (res) {
             messageSender = new MessageSender(registration.getUserName());
             System.out.println("Registration received: ");
