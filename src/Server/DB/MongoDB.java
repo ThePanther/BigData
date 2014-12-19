@@ -38,7 +38,7 @@ public class MongoDB {
         boolean res = false;
         BasicDBObject bdO = new BasicDBObject("user",registration.getUserName());
         DBObject myDoc = dbCollectionUser.findOne(bdO);
-        if (myDoc.get("user").toString().equals(registration.getUserName())) {
+        if ((myDoc != null)&&(myDoc.get("user").toString().equals(registration.getUserName()))) {
             return res;
         } else {
             Map<String,String> map = new HashMap<String, String>();
@@ -59,7 +59,7 @@ public class MongoDB {
         boolean res = false;
         BasicDBObject bdO = new BasicDBObject("user",login.getUserName());
         DBObject myDoc = dbCollectionUser.findOne(bdO);
-        if (myDoc.get("password").toString().equals(login.getPassword())) {
+        if ((myDoc != null)&&(myDoc.get("password").toString().equals(login.getPassword()))) {
             res = true;
         }
         return res;
@@ -78,7 +78,7 @@ public class MongoDB {
         boolean res = false;
         BasicDBObject basicDBObject = new BasicDBObject("user",usersearch.getUser());
         DBObject myDoc = dbCollectionUser.findOne(basicDBObject);
-        if (myDoc.get("user").toString().equals(usersearch.getUser())) {
+        if ((myDoc != null)&&(myDoc.get("user").toString().equals(usersearch.getUser()))) {
             res = true;
         }
         return res;
