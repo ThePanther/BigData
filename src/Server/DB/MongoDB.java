@@ -34,7 +34,7 @@ public class MongoDB {
         }
     }
 
-    public boolean register(Registration registration) {
+    public boolean register(Registration registration, long id) {
         boolean res = false;
         BasicDBObject bdO = new BasicDBObject("user",registration.getUserName());
         DBObject myDoc = dbCollectionUser.findOne(bdO);
@@ -44,6 +44,7 @@ public class MongoDB {
             Map<String,String> map = new HashMap<String, String>();
             map.put("user",registration.getUserName());
             map.put("password",registration.getPassword());
+            map.put("id",""+id);
             map.put("address",registration.getAddress());
             map.put("mail",registration.geteMail());
             map.put("birthdate",registration.getBirthDate());
@@ -82,6 +83,16 @@ public class MongoDB {
             res = true;
         }
         return res;
+    }
+
+    public long getUserNodeID(String user) {
+        long id = -1;
+        BasicDBObject basicDBObject = new BasicDBObject("user",user);
+        DBObject myDoc = dbCollectionUser.findOne(basicDBObject);
+        if (myDoc != null) {
+             id = Long.parseLong(myDoc.get("id").toString());
+        }
+        return id;
     }
 
 }
