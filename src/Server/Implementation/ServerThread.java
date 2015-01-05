@@ -3,11 +3,13 @@ package Server.Implementation;
 
 import Data.*;
 import Server.DB.MongoDB;
+import Server.DB.Neo4J;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Map;
 
 public class ServerThread extends Thread{
 
@@ -22,12 +24,15 @@ public class ServerThread extends Thread{
     private MessageSender messageSender;
 
     private MongoDB mongoDB;
+    private Neo4J neo4J;
 
     public ServerThread(int num, Socket socket) {
         this.name = num;
         this.socket = socket;
         this.mongoDB = new MongoDB();
+        this.neo4J = new Neo4J();
         mongoDB.init();
+        neo4J.init();
     }
 
     @Override
@@ -82,6 +87,7 @@ public class ServerThread extends Thread{
     private void handleLogin(Login login) {
         boolean res = mongoDB.login(login);
         if (res) {
+            neo4J.loginUser(mongoDB.getUserNodeID(login.getUserName()),login.getClientIP(),login.getClientPort());
             messageSender = new MessageSender(login.getUserName());
             System.out.println("Login received: ");
             System.out.println("Username: " + login.getUserName());
@@ -96,8 +102,9 @@ public class ServerThread extends Thread{
     }
 
     private void handleRegistration(Registration registration) {
-        boolean res = true;//TODO:mongoDB.register(registration);
+        boolean res = mongoDB.register(registration,neo4J.createUser(registration.getUserName()));
         if (res) {
+            neo4J.loginUser(mongoDB.getUserNodeID(registration.getUserName()), registration.getClientIP(), registration.getClientPort());
             messageSender = new MessageSender(registration.getUserName());
             System.out.println("Registration received: ");
             System.out.println("Username: " + registration.getUserName());
@@ -123,7 +130,8 @@ public class ServerThread extends Thread{
     }
 
     private void handleMessage(Message message) {
-        //TODO: handle Neo4j
+        neo4J.createCommunication(mongoDB.getUserNodeID(message.getFromUser()),mongoDB.getUserNodeID(message.getToUser()));
+        neo4J.saveMessage(mongoDB.getUserNodeID(message.getFromUser()),message);
         mongoDB.saveMessage(message);
         System.out.println("Message received: ");
         System.out.println("From: " + message.getFromUser());
@@ -132,8 +140,8 @@ public class ServerThread extends Thread{
         send(true, "Message OK");
 
         try {
-            //TODO CLIENT IP  and port form Neo4J
-            messageSender.connectToClient("localhost",50002);
+            Map<String,String> map = neo4J.getUserIP(mongoDB.getUserNodeID(message.getToUser()));
+            messageSender.connectToClient(map.get("ip"),Integer.parseInt(map.get("port")));
             messageSender.sendMessage(message.getToUser(),message.getText());
             messageSender.disconnectFromClient();
         } catch (IOException e) {
@@ -144,7 +152,7 @@ public class ServerThread extends Thread{
     }
 
     private void handleLogout(Logout logout) {
-        //TODO: handle Neo4J
+        neo4J.logoutUser(mongoDB.getUserNodeID(logout.getUserName()));
         System.out.println("Logout received: ");
         System.out.println("Username: " + logout.getUserName());
         send(true, "Logout OK");

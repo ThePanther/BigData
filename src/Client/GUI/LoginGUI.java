@@ -45,7 +45,10 @@ public class LoginGUI {
                             String[] args = new String[0];
                             clientGUI.main(args);
                         } else {
-                            //TODO: wrong password
+                            JOptionPane.showMessageDialog(LoginPanel,
+                                    "Benutzername oder Passwort falsch!",
+                                    "Login Error",
+                                    JOptionPane.ERROR_MESSAGE);
                         }
                     } catch (IOException e1) {
                         e1.printStackTrace();

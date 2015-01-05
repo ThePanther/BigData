@@ -54,7 +54,7 @@ public class ClientImpl {
     public Response login(String userName, String password) throws IOException, ClassNotFoundException {
         Packet packet = new Packet(Type.LOGIN);
         this.userName = userName;
-        Login login = new Login(userName,password);
+        Login login = new Login(userName,password,this.clientIP,this.clientPort);
         packet.setLogin(login);
         send(packet);
         return read();
@@ -70,7 +70,7 @@ public class ClientImpl {
 
     public Response register(String eMail, String userName, String password, String birthDate, String sex, String address, String job) throws IOException, ClassNotFoundException {
         Packet packet = new Packet(Type.REGISTRATION);
-        Registration registration = new Registration(eMail,userName,password);
+        Registration registration = new Registration(eMail,userName,password,this.clientIP,this.clientPort);
         registration.setBirthDate(birthDate);
         registration.setSex(sex);
         registration.setAddress(address);
