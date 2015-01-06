@@ -1,13 +1,16 @@
-package Server.DB;
+package DB;
 
 
 import Data.Message;
+import org.neo4j.cypher.internal.compiler.v2_0.functions.Str;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.RelationshipType;
+import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 
+import javax.management.relation.Relation;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -100,7 +103,20 @@ public class Neo4J {
         return map;
     }
 
-
+    public ArrayList<String> getFriends(long id) {
+        ArrayList<String> list = new ArrayList<>();
+        try (Transaction tx = graphDB.beginTx()) {
+            Node userNode = graphDB.getNodeById(id);
+            Iterable<Relationship> relations = userNode.getRelationships(RelTypes.KNOWS);
+            while (relations.iterator().hasNext()) {
+                Relationship relationship = relations.iterator().next();
+                Node friendNode = relationship.getOtherNode(userNode);
+                list.add(friendNode.getProperty("username").toString());
+            }
+            tx.success();
+        }
+        return list;
+    }
 
 }
 

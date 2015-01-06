@@ -1,4 +1,4 @@
-package Server.DB;
+package DB;
 
 import org.neo4j.graphdb.RelationshipType;
 

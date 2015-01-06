@@ -2,8 +2,8 @@ package Server.Implementation;
 
 
 import Data.*;
-import Server.DB.MongoDB;
-import Server.DB.Neo4J;
+import DB.MongoDB;
+import DB.Neo4J;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

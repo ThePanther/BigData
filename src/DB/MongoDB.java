@@ -1,4 +1,4 @@
-package Server.DB;
+package DB;
 
 
 import Data.Login;
@@ -8,6 +8,7 @@ import Data.Usersearch;
 import com.mongodb.*;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -93,6 +94,33 @@ public class MongoDB {
              id = Long.parseLong(myDoc.get("id").toString());
         }
         return id;
+    }
+
+    public Registration getUser (String username) {
+        Registration registration = null;
+        BasicDBObject basicDBObject = new BasicDBObject("user",username);
+        DBObject myDoc = dbCollectionUser.findOne(basicDBObject);
+        if (myDoc != null) {
+
+            registration = new Registration(myDoc.get("mail").toString(),myDoc.get("user").toString(),myDoc.get("password").toString(),"localhost",0);
+            registration.setJob(myDoc.get("job").toString());
+            registration.setAddress(myDoc.get("address").toString());
+            registration.setBirthDate(myDoc.get("birthdate").toString());
+            registration.setSex(myDoc.get("sex").toString());
+
+        }
+        return registration;
+    }
+
+    public ArrayList<String> messageContained (String text) {
+        ArrayList<String> list = new ArrayList<>();
+        BasicDBObject basicDBObject = new BasicDBObject("text",text);
+        DBCursor cursor = dbCollectionMessage.find(basicDBObject);
+        while (cursor.hasNext()) {
+            DBObject myDoc = cursor.next();
+            list.add(myDoc.get("from").toString());
+        }
+        return list;
     }
 
 }

@@ -2,10 +2,9 @@ import Data.Login;
 import Data.Message;
 import Data.Registration;
 import Data.Usersearch;
-import Server.DB.MongoDB;
-import Server.DB.Neo4J;
+import DB.MongoDB;
+import DB.Neo4J;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
