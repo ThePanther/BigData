@@ -1,16 +1,16 @@
 Manifest-Version: 1.0
-Class-Path: neo4j-graph-algo-2.1.5.jar neo4j-lucene-index-2.1.5.jar ge
- ronimo-jta_1.1_spec-1.1.1.jar neo4j-shell-2.1.5.jar lucene-core-3.6.2
- .jar neo4j-udc-2.1.5.jar server-api-2.1.5.jar parboiled-core-1.1.6.ja
- r neo4j-primitive-collections-2.1.5.jar twitter4j-async-4.0.2.jar neo
- 4j-cypher-compiler-1.9-2.0.3.jar twitter4j-core-4.0.2.jar parboiled-s
- cala_2.10-1.1.6.jar opencsv-2.0.jar scala-library-2.10.4.jar mongo-ja
- va-driver-2.12.4.jar neo4j-cypher-2.1.5.jar neo4j-kernel-2.1.5.jar ne
- o4j-cypher-compiler-2.0-2.0.3.jar neo4j-jmx-2.1.5.jar twitter4j-examp
- les-4.0.2.jar neo4j-cypher-commons-2.1.5.jar org.apache.servicemix.bu
- ndles.jline-0.9.94_1.jar twitter4j-stream-4.0.2.jar twitter4j-media-s
- upport-4.0.2.jar concurrentlinkedhashmap-lru-1.3.1.jar neo4j-graph-ma
- tching-2.1.5.jar joda-time-2.7.jar neo4j-cypher-compiler-2.1-2.1.5.ja
+Class-Path: scala-library-2.10.4.jar neo4j-cypher-2.1.5.jar neo4j-cyph
+ er-compiler-2.0-2.0.3.jar opencsv-2.0.jar parboiled-core-1.1.6.jar ne
+ o4j-lucene-index-2.1.5.jar mongo-java-driver-2.12.4.jar twitter4j-exa
+ mples-4.0.2.jar neo4j-cypher-commons-2.1.5.jar parboiled-scala_2.10-1
+ .1.6.jar twitter4j-core-4.0.2.jar org.apache.servicemix.bundles.jline
+ -0.9.94_1.jar neo4j-cypher-compiler-2.1-2.1.5.jar joda-time-2.7.jar n
+ eo4j-udc-2.1.5.jar twitter4j-media-support-4.0.2.jar neo4j-graph-algo
+ -2.1.5.jar concurrentlinkedhashmap-lru-1.3.1.jar server-api-2.1.5.jar
+  twitter4j-async-4.0.2.jar neo4j-shell-2.1.5.jar twitter4j-stream-4.0
+ .2.jar neo4j-jmx-2.1.5.jar neo4j-kernel-2.1.5.jar lucene-core-3.6.2.j
+ ar neo4j-primitive-collections-2.1.5.jar geronimo-jta_1.1_spec-1.1.1.
+ jar neo4j-graph-matching-2.1.5.jar neo4j-cypher-compiler-1.9-2.0.3.ja
  r
-Main-Class: Analytics.GUI.AnalyticsFrame
+Main-Class: Client.GUI.StartGUI
 

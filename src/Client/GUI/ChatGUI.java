@@ -32,8 +32,6 @@ public class ChatGUI {
 
         contacts = new ArrayList<String>();
 
-        MessageReceiver messageReceiver = new MessageReceiver(client.getClientPort(),this);
-
         SubmitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,6 +52,8 @@ public class ChatGUI {
 
     public void setClient(ClientImpl client) {
         this.client = client;
+        MessageReceiver messageReceiver = new MessageReceiver(client.getClientPort(),this);
+        messageReceiver.start();
     }
 
     public void addText(String from, String text) {
