@@ -114,7 +114,7 @@ public class AnalyticsFrame {
                 statistic.put("unbekannt",statistic.get("unbekannt")+1);
             }
         }
-        statisticTextArea.append("Gefundene Benutzer: "+list.size()+"\n");
+        statisticTextArea.append("Gefundene Benutzer: "+set.size()+"\n");
         statisticTextArea.append("Durchschnitts Alter: "+getAvAge(age)+"\n");
         statisticTextArea.append("Männlich: "+statistic.get("m")+"\n");
         statisticTextArea.append("Weiblich: "+statistic.get("w")+"\n");
