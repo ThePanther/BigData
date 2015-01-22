@@ -1,6 +1,9 @@
 package Server.Implementation;
 
 
+import DB.MongoDB;
+import DB.Neo4J;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,6 +19,10 @@ public class ServerImpl extends Thread {
 
     public ServerImpl(int port) {
         this.port = port;
+        Neo4J neo4J = Neo4J.getInstance();
+        neo4J.init();
+        MongoDB mongoDB = MongoDB.getInstance();
+        mongoDB.init();
 
         try {
             welcomeSocket = new ServerSocket(port);

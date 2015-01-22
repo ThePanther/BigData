@@ -41,6 +41,7 @@ public class ChatGUI {
                     if (response.getState()) {
                         addText(client.getUserName(),MessageTextarea.getText());
                     }
+                    MessageTextarea.setText("");
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 } catch (ClassNotFoundException e1) {

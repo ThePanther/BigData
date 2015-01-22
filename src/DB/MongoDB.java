@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class MongoDB {
 
+    private static MongoDB instance;
     private MongoClient mongoClient;
     private DB db;
     private DBCollection dbCollectionUser;
@@ -22,6 +23,13 @@ public class MongoDB {
 
     public MongoDB() {
 
+    }
+
+    public static MongoDB getInstance () {
+        if (MongoDB.instance == null) {
+            MongoDB.instance = new MongoDB ();
+        }
+        return MongoDB.instance;
     }
 
     public void init(){

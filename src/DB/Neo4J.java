@@ -16,10 +16,18 @@ import java.util.Map;
 
 public class Neo4J {
 
+    private static Neo4J instance;
     private GraphDatabaseService graphDB;
 
     public Neo4J() {
 
+    }
+
+    public static Neo4J getInstance () {
+        if (Neo4J.instance == null) {
+            Neo4J.instance = new Neo4J ();
+        }
+        return Neo4J.instance;
     }
 
     public void init() {

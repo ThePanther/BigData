@@ -23,16 +23,12 @@ public class ServerThread extends Thread{
 
     private MessageSender messageSender;
 
-    private MongoDB mongoDB;
-    private Neo4J neo4J;
+    private MongoDB mongoDB = MongoDB.getInstance();
+    private Neo4J neo4J = Neo4J.getInstance();
 
     public ServerThread(int num, Socket socket) {
         this.name = num;
         this.socket = socket;
-        this.mongoDB = new MongoDB();
-        this.neo4J = new Neo4J();
-        mongoDB.init();
-        neo4J.init();
     }
 
     @Override

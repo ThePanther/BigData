@@ -21,6 +21,7 @@ public class MessageReceiver extends Thread {
 
     public MessageReceiver(int port,ChatGUI chatGUI) {
         this.port = port;
+        this.chatGUI = chatGUI;
 
         try {
             welcomeSocket = new ServerSocket(port);
