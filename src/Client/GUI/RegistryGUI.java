@@ -15,7 +15,7 @@ import java.io.IOException;
  * Time: 19:30
   */
 public class RegistryGUI {
-    private JPanel RegistryPanel;
+    public JPanel RegistryPanel;
     private JLabel UsernameLabel;
     private JLabel EmailLabel;
     private JLabel AdressLabel;
@@ -59,8 +59,10 @@ public class RegistryGUI {
                         if (response.getState()) {
                             ClientGUI clientGUI = new ClientGUI();
                             clientGUI.setClient(client);
-                            String[] args = new String[0];
-                            clientGUI.main(args);
+                            JFrame frame = new JFrame("ClientGUI");
+                            frame.setContentPane(clientGUI.ClientPanel);
+                            frame.pack();
+                            frame.setVisible(true);
                         } else {
                             //TODO: user already in DB
                         }

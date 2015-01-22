@@ -33,8 +33,10 @@ public class StartGUI {
                 }
                 LoginGUI loginGUI = new LoginGUI();
                 loginGUI.setClient(client);
-                String[] args = new String[0];
-                loginGUI.main(args);
+                JFrame frame = new JFrame("LoginGUI");
+                frame.setContentPane(loginGUI.LoginPanel);
+                frame.pack();
+                frame.setVisible(true);
             }
         });
         RegistryButton.addActionListener(new ActionListener() {
@@ -49,8 +51,10 @@ public class StartGUI {
                 }
                 RegistryGUI registryGUI = new RegistryGUI();
                 registryGUI.setClient(client);
-                String[] args = new String[0];
-                registryGUI.main(args);
+                JFrame frame = new JFrame("RegistryGUI");
+                frame.setContentPane(registryGUI.RegistryPanel);
+                frame.pack();
+                frame.setVisible(true);
             }
         });
     }

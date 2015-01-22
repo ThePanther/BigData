@@ -15,7 +15,7 @@ import java.io.IOException;
  * Time: 19:29
  */
 public class LoginGUI {
-    private JPanel LoginPanel;
+    public JPanel LoginPanel;
     private JLabel UsernameLabel;
     private JTextField UserTextfield;
     private JLabel PasswordLabel;
@@ -42,8 +42,10 @@ public class LoginGUI {
                         if (response.getState()) {
                             ClientGUI clientGUI = new ClientGUI();
                             clientGUI.setClient(client);
-                            String[] args = new String[0];
-                            clientGUI.main(args);
+                            JFrame frame = new JFrame("ClientGUI");
+                            frame.setContentPane(clientGUI.ClientPanel);
+                            frame.pack();
+                            frame.setVisible(true);
                         } else {
                             JOptionPane.showMessageDialog(LoginPanel,
                                     "Benutzername oder Passwort falsch!",

@@ -13,9 +13,7 @@ import twitter4j.conf.ConfigurationBuilder;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AnalyticsFrame {
     private JPanel AnalyticsFrame;
@@ -97,11 +95,12 @@ public class AnalyticsFrame {
         statistic.put("unbekannt",0);
         ArrayList<Integer> age = new ArrayList<>();
         ArrayList<String> list = mongoDB.messageContained(searchTextField.getText());
-        Object[] objects = list.toArray();
+        HashSet<String> set = new HashSet<>(list);
+        Object[] objects = set.toArray();
         for (int i=0; i < objects.length; i++) {
             comboBox.addItem(objects[i]);
         }
-        for (String s : list) {
+        for (String s : set) {
             Registration registration = mongoDB.getUser(s);
             //E-Mails
             mailTextArea.append(registration.geteMail()+"\n");
@@ -114,13 +113,12 @@ public class AnalyticsFrame {
             } else {
                 statistic.put("unbekannt",statistic.get("unbekannt")+1);
             }
-
-            statisticTextArea.append("Gefundene Benutzer: "+list.size()+"\n");
-            statisticTextArea.append("Durchschnitts Alter: "+getAvAge(age)+"\n");
-            statisticTextArea.append("Männlich: "+statistic.get("m")+"\n");
-            statisticTextArea.append("Weiblich: "+statistic.get("w")+"\n");
-            statisticTextArea.append("Unbekannt: "+statistic.get("unbekannt")+"\n");
         }
+        statisticTextArea.append("Gefundene Benutzer: "+list.size()+"\n");
+        statisticTextArea.append("Durchschnitts Alter: "+getAvAge(age)+"\n");
+        statisticTextArea.append("Männlich: "+statistic.get("m")+"\n");
+        statisticTextArea.append("Weiblich: "+statistic.get("w")+"\n");
+        statisticTextArea.append("Unbekannt: "+statistic.get("unbekannt")+"\n");
     }
 
     private DateTime getDate(String string) {

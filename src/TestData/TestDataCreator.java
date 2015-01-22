@@ -41,7 +41,8 @@ public class TestDataCreator {
                 String trend = trendArray[j].getName();
                 putIntoList(trend);
             }
-            for (int i = low; i <= high; i++) {
+            for (int i = low; i < high; i++) {
+                System.out.println("REG: testUser"+i);
                 Registration registration = new Registration("testUser"+i+"@test.de","testUser"+i,"123","127.0.0.1",50001);
                 int gender = generator.nextInt(2);
                 if (gender<1) {
@@ -64,9 +65,9 @@ public class TestDataCreator {
             }
             for (int l = low; l <= high; l++) {
                 for (int k = 0; k<=msg;k++) {
-                    int to = generator.nextInt(high)+low;
-                    //String text = this.getList().get(generator.nextInt(list.size()));
-                    String text = this.getList().get(0);
+                    System.out.println("MSG: testUser"+l+" Nr."+k+"/"+msg);
+                    int to = generator.nextInt(high-low)+low;
+                    String text = this.getList().get(generator.nextInt(list.size()));
                     Message message = new Message("testUser"+l,"testUser"+to,text);
                     neo4J.createCommunication(mongoDB.getUserNodeID(message.getFromUser()),mongoDB.getUserNodeID(message.getToUser()));
                     neo4J.saveMessage(mongoDB.getUserNodeID(message.getFromUser()),message);

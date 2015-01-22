@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 public class ChatGUI {
-    private JPanel ChatPanel;
+    public JPanel ChatPanel;
     private JTextArea HistoryTextarea;
     private JTextArea MessageTextarea;
     private JButton SubmitButton;

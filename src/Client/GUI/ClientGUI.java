@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 public class ClientGUI {
-    private JPanel ClientPanel;
+    public JPanel ClientPanel;
     private JTextField UsernameTextField;
     private JLabel UsernameLabel;
     private JButton SearchButton;
@@ -56,8 +56,10 @@ public class ClientGUI {
                 ChatGUI chatGUI = new ChatGUI();
                 chatGUI.addUser(toUser);
                 chatGUI.setClient(client);
-                String[] args = new String[0];
-                chatGUI.main(args);
+                JFrame frame = new JFrame("ChatGUI");
+                frame.setContentPane(chatGUI.ChatPanel);
+                frame.pack();
+                frame.setVisible(true);
             }
         });
 
