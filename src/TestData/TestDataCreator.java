@@ -58,12 +58,15 @@ public class TestDataCreator {
                 } else {
                     registration.setBirthDate(day+"."+month+"."+year);
                 }
+                registration.setJob("");
+                registration.setAddress("");
                 mongoDB.register(registration,neo4J.createUser(registration.getUserName()));
             }
             for (int l = low; l <= high; l++) {
                 for (int k = 0; k<=msg;k++) {
                     int to = generator.nextInt(high)+low;
-                    String text = this.getList().get(generator.nextInt(list.size()));
+                    //String text = this.getList().get(generator.nextInt(list.size()));
+                    String text = this.getList().get(0);
                     Message message = new Message("testUser"+l,"testUser"+to,text);
                     neo4J.createCommunication(mongoDB.getUserNodeID(message.getFromUser()),mongoDB.getUserNodeID(message.getToUser()));
                     neo4J.saveMessage(mongoDB.getUserNodeID(message.getFromUser()),message);

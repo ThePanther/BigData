@@ -19,17 +19,18 @@ public class StartGUI {
 
     public StartGUI() {
 
-        this.client = new ClientImpl(serverIPTextField.getText(),Integer.parseInt(serverportTextField.getText()),clientIPTextField.getText(),Integer.parseInt(clientportTextField.getText()));
 
-        try {
-            client.connectToServer();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
 
         LoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                client = new ClientImpl(serverIPTextField.getText(),Integer.parseInt(serverportTextField.getText()),clientIPTextField.getText(),Integer.parseInt(clientportTextField.getText()));
+
+                try {
+                    client.connectToServer();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
                 LoginGUI loginGUI = new LoginGUI();
                 loginGUI.setClient(client);
                 String[] args = new String[0];
@@ -39,6 +40,13 @@ public class StartGUI {
         RegistryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                client = new ClientImpl(serverIPTextField.getText(),Integer.parseInt(serverportTextField.getText()),clientIPTextField.getText(),Integer.parseInt(clientportTextField.getText()));
+
+                try {
+                    client.connectToServer();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
                 RegistryGUI registryGUI = new RegistryGUI();
                 registryGUI.setClient(client);
                 String[] args = new String[0];

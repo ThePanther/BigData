@@ -103,8 +103,8 @@ public class MongoDB {
         if (myDoc != null) {
 
             registration = new Registration(myDoc.get("mail").toString(),myDoc.get("user").toString(),myDoc.get("password").toString(),"localhost",0);
-            registration.setJob(myDoc.get("job").toString());
-            registration.setAddress(myDoc.get("address").toString());
+            registration.setJob("");//myDoc.get("job").toString());
+            registration.setAddress("");//myDoc.get("address").toString());
             registration.setBirthDate(myDoc.get("birthdate").toString());
             registration.setSex(myDoc.get("sex").toString());
 
